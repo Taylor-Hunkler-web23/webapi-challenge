@@ -116,8 +116,8 @@ function validateUserId(req, res, next) {
 
 function validateUser(req, res, next) {
     const  action  = req.body;
-    if (!action.description) {
-        return res.status(400).json({ message: "missing required description field" })
+    if (!action.description || !action.notes) {
+        return res.status(400).json({ message: "missing required description or notes field" })
     }
 
   else {

@@ -71,7 +71,7 @@ router.get('/:id', validateUserId, (req, res) => {
 });
 
 //returns project with specified id
-router.get('/:id/actions', validateUserId, (req, res) => {
+router.get('/:id/actions', validateUserId, validateAction, (req, res) => {
     const id = req.params.id;
     projectDB.getProjectActions(id)
         .then(project => {
@@ -118,8 +118,8 @@ router.put('/:id', validateUserId, validateUser, (req, res) => {
 
     function validateUser(req, res, next) {
         const  action  = req.body;
-        if (!action.description) {
-            return res.status(400).json({ message: "missing required description field" })
+        if (!action.description || !action.name) {
+            return res.status(400).json({ message: "missing required description or name field" })
         }
     
       else {
@@ -144,5 +144,23 @@ function validateUserId(req, res, next) {
         })
 
 };
+
+function validateAction(req, res, next) {
+    const { id } = req.params;
+    projectDB.getProjectActions(id)
+       
+
+    .then(actions => {
+        if (actions.length === 0) {
+            res.status(404).json({ message: "There is no actions for that project" })
+        } else {
+            next()
+        }
+    })
+
+        
+
+};
+
 
 module.exports = router;
