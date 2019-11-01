@@ -26,13 +26,24 @@ Demonstrate your understanding of this Sprint's concepts by answering the follow
 
 - [ ] Mention two parts of Express that you learned about this week.
 
+Express lets you create routes with express.router and it lets you handle requests for the server. Most of the things we can do with express is middleware.
+
+
 - [ ] Describe Middleware?
+
+Middleware  can change a request or response. There are different types of middleware. Built-in middleware, which is included with express such as express.json(). Third party middleware,  which must be installed through npm or yarn. There is also custom middleware, which we can build ourselves.
 
 - [ ] Describe a Resource?
 
+Resources are things that we can use HTTP methods to perform actions on. Examples are things like users or posts.
+
 - [ ] What can the API return to help clients know if a request was successful?
 
+An API can return a status in the 200's to let the user know the request was successful. You could also include a success message such as "user was deleted successfully".
+
 - [ ] How can we partition our application into sub-applications?
+
+We can split our application into sub applications by using express router so we can have seperate files for each router.
 
 ## Project Setup
 
