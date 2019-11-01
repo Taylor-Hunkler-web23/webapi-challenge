@@ -51,6 +51,24 @@ router.delete('/:id', validateUserId, (req, res) => {
         })
 })
 
+//returns project with specified id
+router.get('/:id', validateUserId, (req, res) => {
+    const id = req.params.id;
+    projectDB.getProjectActions(id)
+        .then(project => {
+
+            res.status(200).json(project);
+
+        })
+        .catch(error => {
+            console.log(error);
+            res.status(500).json({
+                error: 'The project information could not be retrieved'
+            })
+        })
+
+
+});
 
     //Middleware
 
