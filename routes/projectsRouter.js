@@ -54,7 +54,7 @@ router.delete('/:id', validateUserId, (req, res) => {
 //returns project with specified id
 router.get('/:id', validateUserId, (req, res) => {
     const id = req.params.id;
-    projectDB.getProjectActions(id)
+    projectDB.get(id)
         .then(project => {
 
             res.status(200).json(project);
@@ -69,6 +69,50 @@ router.get('/:id', validateUserId, (req, res) => {
 
 
 });
+
+//returns project with specified id
+router.get('/:id/actions', validateUserId, (req, res) => {
+    const id = req.params.id;
+    projectDB.getProjectActions(id)
+        .then(project => {
+
+            res.status(200).json(project);
+
+        })
+        .catch(error => {
+            console.log(error);
+            res.status(500).json({
+                error: 'The project action information could not be retrieved'
+            })
+        })
+
+
+});
+
+//Update action
+router.put('/:id', validateUserId, validateUser, (req, res) => {
+    const id = req.params.id;
+    const { body } = req;
+
+
+
+
+    projectDB.update(id, body)
+
+        .then(project => {
+
+            res.status(200).json(project);
+
+
+        })
+        .catch(err => {
+            console.log('error', err);
+            res.status(500).json({ error: "There was an error while updating the project to the database" })
+        })
+
+
+});
+
 
     //Middleware
 
