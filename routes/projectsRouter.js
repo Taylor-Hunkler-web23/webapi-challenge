@@ -17,5 +17,36 @@ router.get('/', (req, res) => {
         })
 });
 
+// POST project
+router.post('/', validateUser, (req, res) => {
+
+    const project = req.body
+    
+        projectDB.insert(req.body)
+    
+            .then(project => {
+                res.status(201).json(project);
+            })
+            .catch(err => {
+                console.log('error', err);
+                res.status(500).json({ error: "There was an error while saving the project to the database" })
+            })
+    
+    })
+
+    //Middleware
+
+    function validateUser(req, res, next) {
+        const  action  = req.body;
+        if (!action.description) {
+            return res.status(400).json({ message: "missing required description field" })
+        }
+    
+      else {
+            next()
+        }
+    
+    
+    };
 
 module.exports = router;
