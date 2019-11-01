@@ -71,6 +71,31 @@ const action = req.body
 
 })
 
+//Update action
+router.put('/:id', validateUserId, validateUser, (req, res) => {
+    const id = req.params.id;
+    const { body } = req;
+
+
+
+
+    actiondb.update(id, body)
+
+        .then(action => {
+
+            res.status(200).json(action);
+
+
+        })
+        .catch(err => {
+            console.log('error', err);
+            res.status(500).json({ error: "There was an error while updating the action to the database" })
+        })
+
+
+});
+
+
 
 // //custom middleware
 
