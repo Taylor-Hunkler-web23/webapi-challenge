@@ -34,6 +34,24 @@ router.post('/', validateUser, (req, res) => {
     
     })
 
+    //Delete project
+router.delete('/:id', validateUserId, (req, res) => {
+    const id = req.params.id;
+    projectDB.remove(id)
+
+        .then(project => {
+           
+                res.status(200).json({ message: 'Deleted' });
+
+          
+        })
+        .catch(err => {
+            console.log('error', err);
+            res.status(404).json({ error: "The project could not be removed" })
+        })
+})
+
+
     //Middleware
 
     function validateUser(req, res, next) {
@@ -48,5 +66,21 @@ router.post('/', validateUser, (req, res) => {
     
     
     };
+
+
+    
+function validateUserId(req, res, next) {
+    const { id } = req.params;
+    projectDB.get(id)
+        .then(user => {
+            if (user) {
+
+                next()
+            } else {
+                res.status(404).json({ message: "invalid project id" })
+            }
+        })
+
+};
 
 module.exports = router;
